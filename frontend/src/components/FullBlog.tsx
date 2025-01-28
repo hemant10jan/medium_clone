@@ -4,9 +4,15 @@ import { Appbar } from "./Appbar"
 import { Avatar } from "./BlogCard"
 import { BACKEND_URL } from "../config"
 import { useNavigate } from "react-router-dom"
+import { useRecoilValue } from "recoil"
+import { idState } from "../state/atom"
+
 
 export const FullBlog=({blog}:{blog:Blog})=>{
     const navigate=useNavigate()
+    const currentUserLoggedinId=useRecoilValue(idState);
+   
+
     return(
         <div>
             <div>
@@ -16,9 +22,10 @@ export const FullBlog=({blog}:{blog:Blog})=>{
                 <div className="grid grid-cols-12 pt-12 px-10 gap-x-8 w-full max-w-screen-xl">
                     <div className="col-span-8">
                         <div className="text-4xl font-extrabold text-justify">{blog.title}</div>
-                        <div className="text-gray-500 py-5">Post on 2nd December,  2024</div>
+                       
+                        <div className="text-gray-500 py-5">Post on {blog.publishedDate}</div>
                         <div className="pt-2 h-screen text-justify">{blog.content}</div>
-                        <button onClick={async ()=>{
+                        {blog.author.id===currentUserLoggedinId && <button onClick={async ()=>{
                             await axios.delete(`${BACKEND_URL}/api/v1/blog/${blog.id}`,{
                                 headers:{
                                     Authorization:`Bearer ${localStorage.getItem("token")}`
@@ -26,7 +33,8 @@ export const FullBlog=({blog}:{blog:Blog})=>{
                             )
                             navigate("/blogs")
                         }}
-                        className="bg-gray-600 mb-4 hover:bg-gray-500 text-white font-bold py-1 px-4 rounded">Delete Blog</button>
+                        className="bg-gray-600 mb-4 hover:bg-gray-500 text-white font-bold py-1 px-4 rounded">
+                        Delete Blog</button>}
                     </div>
                     <div className="col-span-4">
                         <div className="flex justify-center gap-2">

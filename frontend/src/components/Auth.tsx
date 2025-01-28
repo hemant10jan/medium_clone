@@ -3,11 +3,15 @@ import { Link, useNavigate } from "react-router-dom"
 import { SignupBody } from "@hemant_1001/medium-common"
 import axios from "axios"
 import { BACKEND_URL } from "../config"
+import { useSetRecoilState } from "recoil"
+import { idState } from "../state/atom"
+
 
 //trpc
 export const Auth=({type} : {type:"signup" | "signin"})=>{
     const navigate=useNavigate();
-
+    const setId=useSetRecoilState(idState);
+    
     const [postInput,setPostInputs]=useState<SignupBody>({
         email:"",
         password:"",
@@ -21,6 +25,7 @@ export const Auth=({type} : {type:"signup" | "signin"})=>{
             )
             const token=response.data.token
             localStorage.setItem("token",token)
+            setId(response.data.id)
             navigate("/blogs")
         }
         catch(e){

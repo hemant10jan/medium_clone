@@ -21,6 +21,7 @@ model Post{
   content String
   published Boolean @default(false)
   authorId String
+  publishedDate String @default("")
   author User @relation(fields: [authorId], references: [id])
   // This is just logical thing to create foreign thing it will not go to DB
 }

@@ -6,11 +6,15 @@ import { BACKEND_URL } from "../config";
  export interface Blog{
     "title": string,
     "content": string,
+    "publishedDate":string,       // Modified
     "id": string,
     "author": {
-        "name": string
+        "name": string,
+        "id":string             // Modified
     }
 }
+
+
 
 export const useBlog=({id}:{id:string})=>{
     const[loading,setLoading]=useState(true);
@@ -33,6 +37,7 @@ export const useBlog=({id}:{id:string})=>{
         blog
     }
 }
+
 
 export const useBlogs=()=>{
     const[loading,setLoading]=useState(true);

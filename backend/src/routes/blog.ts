@@ -1,4 +1,4 @@
-import { Hono } from "hono";
+import { Context, Hono, Next } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { verify } from "hono/jwt";
@@ -11,8 +11,11 @@ export const blogRouter=new Hono<{
     },
     Variables:{
         userId:string,
+        finalDate:string
     }
 }>();
+
+// Middleware which we are using to format the Date to add in Blog
 
 blogRouter.use("/*", async (c,next)=>{
     const header=c.req.header("Authorization") || ""
@@ -37,7 +40,34 @@ blogRouter.use("/*", async (c,next)=>{
     }
 })
 
-blogRouter.post("/",async (c)=>{
+const formatDate=async (c:Context,next:Next)=>{
+    const obj=new Date()
+    const day=obj.getDate();
+    const month=obj.getMonth();
+    const year=obj.getFullYear();
+    
+    const arr=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    let suffix=""
+
+    if(day%10===1 && day!==11){
+        suffix+="st"
+    }
+    else if(day%10===2 && day!==12){
+        suffix+="nd"
+    }
+    else if(day%10===3 && day!==13){
+        suffix+="rd"
+    }
+    else{
+        suffix+="th"
+    }
+
+    const finalDate=day+""+suffix+" "+arr[month]+" "+year;
+    c.set("finalDate",finalDate)
+    await next()
+}
+
+blogRouter.post("/",formatDate,async (c)=>{
     const body=await c.req.json()
 
     const {success}=createBlogInput.safeParse(body)
@@ -55,12 +85,14 @@ blogRouter.post("/",async (c)=>{
     
     
     const author=c.get("userId")
+    const date=c.get("finalDate")
 
     const blog=await prisma.post.create({
         data:{
             title:body.title,
             content:body.content,
-            authorId:author
+            authorId:author,
+            publishedDate:date
         }
     })
 
@@ -68,8 +100,6 @@ blogRouter.post("/",async (c)=>{
         id:blog.id
     })
 })
-
-
 
 blogRouter.put("/",async (c)=>{
     const body=await c.req.json()
@@ -113,6 +143,7 @@ blogRouter.get("/bulk", async (c)=>{
             select:{
                 title:true,
                 content:true,
+                publishedDate:true,
                 id:true,
                 author:{
                     select:{
@@ -152,9 +183,11 @@ blogRouter.get("/:id", async (c)=>{
                 title:true,
                 content:true,
                 id:true,
+                publishedDate:true,
                 author:{
                     select:{
-                        name:true
+                        name:true,
+                        id:true
                     }
                 }
             }

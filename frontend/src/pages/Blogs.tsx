@@ -32,7 +32,7 @@ export function Blogs(){
                 <div className="max-w-2xl">
                     {blogs.map((cblog,val)=>{
                         return <BlogCard key={val} id={cblog.id} title={cblog.title} content={cblog.content} 
-                        authorName={cblog.author.name || "Anonymous"} publishedDate={"2nd Feb 2024"} />
+                        authorName={cblog.author.name || "Anonymous"} publishedDate={cblog.publishedDate} />
                     })}
                 </div>
             </div>
