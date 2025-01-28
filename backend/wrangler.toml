@@ -3,7 +3,7 @@ main = "src/index.ts"
 compatibility_date = "2025-01-20"
 
 [vars]
-DATABASE_URL=""
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMTJiMWQyMmQtZDIzNi00OGIxLWJjODUtY2I2ZThjMTBjYjdiIiwidGVuYW50X2lkIjoiYWI4ODA3Y2NmNTM2NDkzODU2NzZlYWRlZTc1ODMxNGVjMGZjYjc2NGUyZTlmNDZhNjg1Y2Q4NjdkMjgxYmM1YiIsImludGVybmFsX3NlY3JldCI6IjhkMTZhY2QwLTI0MTEtNDE1MC04YmFkLTJmNDM5ZjM0MjFiZiJ9.yE73aaDSnr4CL-9YHPXJt91vUNfrJrR8kCYmEdkR3X4"
 
 
-JWT_SECRET=""
+JWT_SECRET="secret"
