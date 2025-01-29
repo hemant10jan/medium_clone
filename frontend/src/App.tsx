@@ -4,10 +4,11 @@ import { Blogs } from "./pages/Blogs"
 import { Signin } from "./pages/Signin"
 import { Signup } from "./pages/Signup"
 import { Publish } from "./pages/Publish"
+import { Home } from "./pages/Home"
 
 
 const router=createBrowserRouter([
-  {path:"/",element:<Blogs/>},
+  {path:"/",element:<Home/>},
   {path:"/signin",element:<Signin/>},
   {path:"/signup",element:<Signup/>},
   {path:"/blog/:id",element:<Blog/>},
