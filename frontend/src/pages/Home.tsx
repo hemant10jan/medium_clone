@@ -1,11 +1,12 @@
+import { useRecoilValue } from "recoil";
 import { Blogs } from "./Blogs";
 import { Signin } from "./Signin";
+import { idState } from "../state/atom";
 
 export const Home=()=>{
+    const currentUserLoggedinId=useRecoilValue(idState)
 
-    const isLoggedIn=localStorage.getItem("token");
-
-    if(isLoggedIn){
+    if(currentUserLoggedinId){
         return <Blogs/>
     }
     else{
