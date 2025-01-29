@@ -4,7 +4,7 @@ import { SignupBody } from "@hemant_1001/medium-common"
 import axios from "axios"
 import { BACKEND_URL } from "../config"
 import { useSetRecoilState } from "recoil"
-import { idState } from "../state/atom"
+import { idState } from "../store/atom"
 
 
 //trpc

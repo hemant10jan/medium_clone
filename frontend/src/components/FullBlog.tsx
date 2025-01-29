@@ -5,7 +5,7 @@ import { Avatar } from "./BlogCard"
 import { BACKEND_URL } from "../config"
 import { useNavigate } from "react-router-dom"
 import { useRecoilValue } from "recoil"
-import { idState } from "../state/atom"
+import { idState } from "../store/atom"
 
 
 export const FullBlog=({blog}:{blog:Blog})=>{

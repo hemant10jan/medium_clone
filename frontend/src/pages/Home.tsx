@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import { Blogs } from "./Blogs";
 import { Signin } from "./Signin";
-import { idState } from "../state/atom";
+import { idState } from "../store/atom";
 
 export const Home=()=>{
     const currentUserLoggedinId=useRecoilValue(idState)
@@ -13,5 +13,4 @@ export const Home=()=>{
     else{
         return <Signin/>
     }
-
 }
