@@ -6,11 +6,13 @@ import { idState } from "../state/atom";
 export const Home=()=>{
     const currentUserLoggedinId=useRecoilValue(idState)
 
-    if(currentUserLoggedinId){
-        return <Blogs/>
-    }
-    else{
-        return <Signin/>
-    }
+    return <div>Hi</div>
+
+    // if(currentUserLoggedinId){
+    //     return <Blogs/>
+    // }
+    // else{
+    //     return <Signin/>
+    // }
 
 }
